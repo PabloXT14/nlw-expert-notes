@@ -3,7 +3,11 @@ import { X } from 'lucide-react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 
-export const NewNoteCard = () => {
+type NewNoteCardProps = {
+  onNoteCreated: (content: string) => void
+}
+
+export const NewNoteCard = ({ onNoteCreated }: NewNoteCardProps) => {
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true)
   const [content, setContent] = useState('')
 
@@ -24,7 +28,14 @@ export const NewNoteCard = () => {
   function handleSaveNote(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    console.log('content', content)
+    if (content.trim() === '') {
+      return toast.error('A nota não pode ser vazia')
+    }
+
+    onNoteCreated(content)
+
+    setContent('')
+    setShouldShowOnboarding(true)
 
     toast.success('Nota criada com sucesso!')
   }
@@ -71,6 +82,7 @@ export const NewNoteCard = () => {
               ) : (
                 <textarea
                   autoFocus
+                  value={content}
                   onChange={handleContentChanged}
                   className="flex-1 resize-none bg-transparent text-sm leading-6 outline-none"
                 />
