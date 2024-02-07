@@ -9,8 +9,18 @@ type Note = {
   content: string
 }
 
+const LOCALSTORAGE_KEY_NOTES = '@nlw-expert:notes'
+
 export function App() {
-  const [notes, setNotes] = useState<Note[]>([])
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const storedNotes = localStorage.getItem(LOCALSTORAGE_KEY_NOTES)
+
+    if (storedNotes) {
+      return JSON.parse(storedNotes)
+    }
+
+    return []
+  })
 
   function onNoteCreated(content: string) {
     const newNote = {
@@ -19,7 +29,11 @@ export function App() {
       content,
     }
 
-    setNotes([newNote, ...notes])
+    const newNotes = [newNote, ...notes]
+
+    setNotes(newNotes)
+
+    localStorage.setItem(LOCALSTORAGE_KEY_NOTES, JSON.stringify(newNotes))
   }
 
   return (
