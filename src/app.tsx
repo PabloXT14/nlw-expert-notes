@@ -27,8 +27,20 @@ export function App() {
         <NewNoteCard />
 
         <NoteCard note={note} />
-        <NoteCard note={note} />
-        <NoteCard note={note} />
+        <NoteCard
+          note={{
+            date: new Date(2024, 1, 6),
+            content:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi, sapiente. Debitis repellat expedita rerum temporibus.',
+          }}
+        />
+        <NoteCard
+          note={{
+            date: new Date(2024, 1, 5),
+            content:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi, sapiente. Debitis repellat expedita rerum temporibus.',
+          }}
+        />
       </div>
     </div>
   )
