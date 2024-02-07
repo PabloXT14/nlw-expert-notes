@@ -1,3 +1,5 @@
+import logo from './assets/logo-nlw-expert.svg'
+
 export function App() {
-  return <h1>Hello World!</h1>
+  return <img src={logo} alt="" />
 }
