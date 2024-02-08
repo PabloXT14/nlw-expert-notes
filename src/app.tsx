@@ -3,7 +3,7 @@ import logo from './assets/logo-nlw-expert.svg'
 import { NewNoteCard } from './components/new-note-card'
 import { NoteCard } from './components/note-card'
 
-type Note = {
+export type Note = {
   id: string
   date: Date
   content: string
@@ -31,6 +31,14 @@ export function App() {
     }
 
     const newNotes = [newNote, ...notes]
+
+    setNotes(newNotes)
+
+    localStorage.setItem(LOCALSTORAGE_KEY_NOTES, JSON.stringify(newNotes))
+  }
+
+  function onNoteDeleted(id: string) {
+    const newNotes = notes.filter((note) => note.id !== id)
 
     setNotes(newNotes)
 
@@ -73,7 +81,9 @@ export function App() {
         <NewNoteCard onNoteCreated={onNoteCreated} />
 
         {filteredNotes.map((note) => {
-          return <NoteCard key={note.id} note={note} />
+          return (
+            <NoteCard key={note.id} note={note} onNoteDeleted={onNoteDeleted} />
+          )
         })}
       </div>
     </div>

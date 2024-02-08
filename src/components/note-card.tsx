@@ -2,15 +2,14 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { X } from 'lucide-react'
+import { Note } from '../app'
 
 type NoteCardProps = {
-  note: {
-    date: Date
-    content: string
-  }
+  note: Note
+  onNoteDeleted: (id: string) => void
 }
 
-export const NoteCard = ({ note }: NoteCardProps) => {
+export const NoteCard = ({ note, onNoteDeleted }: NoteCardProps) => {
   const formattedDate = formatDistanceToNow(note.date, {
     addSuffix: true,
     locale: ptBR,
@@ -46,6 +45,7 @@ export const NoteCard = ({ note }: NoteCardProps) => {
 
           <button
             type="button"
+            onClick={() => onNoteDeleted(note.id)}
             className="group w-full bg-slate-800 py-4 text-center text-sm font-medium text-slate-300 outline-none"
           >
             Deseja{' '}
